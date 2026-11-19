@@ -1,6 +1,6 @@
-# 竞彩数据 App（原生 Android · Kotlin + Jetpack Compose）
+# 数据 App（原生 Android · Kotlin + Jetpack Compose）
 
-个人用的竞彩/比分工具：足球与篮球比分直播、模拟投注与账单、赔率变化、同奖查询、赛事资料。
+个人用的比分工具：足球与篮球比分直播、模拟投注与账单、赔率变化、同奖查询、赛事资料。
 
 > 本仓库**同时承载源码与自动更新**：App 检查更新走本仓库的 Releases
 > （仓库名取自 `data/update/UpdateConfig.kt` 的 `OWNER` / `REPO`），
