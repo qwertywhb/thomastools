@@ -94,9 +94,3 @@ python scripts/release.py --changelog "预览" --dry-run
 
 脚本已把这三条写死在流程里：`update.json` 与 APK 由同一次运行生成，SHA-256 现算，产物若早于本次构建开始时间直接中止。
 
-## 说明
-
-- 体彩接口需 `Referer: https://www.sporttery.cn/`（`ApiClient` 统一处理）
-- okooo 页面是 GBK 编码（`ApiClient` 对 okooo 域名自动解码）
-- 涨跌标志、`status` 等字段接口返回类型不稳定（字符串/数字），已用 `optString().toIntOrNull()` 容错
-- 篮球源站的主客顺序**随联赛不同**（NBA 客在前、欧洲联赛主在前），解析层用源站让分标注 `team[8]` 判定，详见 `BbLiveModels` 注释
