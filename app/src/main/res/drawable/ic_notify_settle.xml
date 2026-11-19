@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖通知的**状态栏小图标**（已结算 / 未中奖）。
+
+  与中奖的奖杯区分开：中奖是「喜事」，未中奖只是「处理完了」，
+  用对勾环表示「已出结果」而不是任何带情绪的符号。
+  实心圆在对勾处会被抹掉，所以圆画成**环**，对勾才有对比，18dp 下仍可辨。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M12,3 A9,9 0 1 0 12,21 A9,9 0 1 0 12,3 Z"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M7.6,12.2 L10.7,15.3 L16.4,9.4"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2.2" />
+</vector>

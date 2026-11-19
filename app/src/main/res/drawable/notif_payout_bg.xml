@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖通知的卡片底 —— **极淡暖白 + 一圈淡红描边**（夜间自动切深红棕，见 values-night）。
+
+  ## 为什么不再是红底
+  用户口径变了：「字体变红，背景不要红太鲜艳」。红从"面"退到"字"上，
+  背景只留一点点暖调（#FFFCFB → #FFEDEA），既跟红色有关系，又不刺眼。
+
+  ## 描边是必需的，不是装饰
+  通知面板本身就是浅色，纯浅底卡片放上去**看不出边界**（尤其展开态内容多时），
+  一圈 1dp 的 #1FC62828 让卡片有个淡淡的轮廓，又不会变成"红框"。
+
+  ## 圆角必须自己画
+  vivo/OriginOS **不会**把自定义版式裁成圆角（实测：直角红块像贴了张贴纸），
+  14dp 与卡片自身圆角（≈15dp）对齐；原生 Android 上系统会再裁一次，同径同心看不出来。
+-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:endColor="@color/notif_payout_bg_end"
+        android:startColor="@color/notif_payout_bg_start" />
+    <corners android:radius="14dp" />
+    <stroke
+        android:width="1dp"
+        android:color="@color/notif_payout_stroke" />
+</shape>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  全透明的小图标，专供前台服务锚点通知使用。
+
+  为什么需要它：前台服务必须挂一条通知，系统会在**状态栏顶部**画出它的 smallIcon。
+  实测本机（vivo V2425A / Android 16）渠道 importance 压到 NONE 也无效 ——
+  系统会把前台服务通知的渠道强制抬回可见（mImportance=2），应用侧降不回去。
+  于是改用「透明图标」：通知仍然存在（满足系统规定、服务不被杀），
+  但状态栏顶部**看不到任何图形**，与「状态栏只留进球提示」的要求一致。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="1dp"
+    android:height="1dp"
+    android:viewportWidth="1"
+    android:viewportHeight="1">
+    <path
+        android:pathData="M0,0h1v1h-1z"
+        android:fillColor="#00000000" />
+</vector>

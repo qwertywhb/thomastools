@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.JingCai" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- 🔴 必须与 Theme.kt 的 Primary(#C62828) 同值：两者不一致会出现
+             「状态栏一截色 + 顶栏另一截色」的两截色，最伤统一感。
+             （用户要求整体换红，原值 #3F51D6 靛蓝。） -->
+        <item name="android:statusBarColor">#C62828</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

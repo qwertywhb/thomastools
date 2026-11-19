@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- 后台轮询期间持 PARTIAL_WAKE_LOCK：让进程不算「cached」，
+         从而躲开 cgroup freezer 的冻结（否则息屏 5 秒就被冻住，协程停摆）。 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 精确闹钟：息屏后进程被 cgroup freezer 冻结，唯一还能「叫醒进程跑一轮」的通道。
+         USE_EXACT_ALARM（API 33+）由系统自动授予，不需要引导用户去设置里开。 -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <!-- 前台服务：仅作为「防冻结锚点」，让息屏/后台时进程不被 cgroup freezer 冻住，
+         否则后台进球轮询协程直接停摆（实测 cgroup.freeze=1）。它的通知渠道是
+         IMPORTANCE_NONE ⇒ 状态栏不可见，不影响「状态栏只留进球提示」。 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <!-- 「一键开启」无障碍用：带 development 标志的签名级权限，普通安装拿不到，
+         但可用 `adb shell pm grant com.example.jingcai android.permission.WRITE_SECURE_SETTINGS`
+         一次性授予 ⇒ 之后本 App 能自己把无障碍打开（见 GoalKeepAliveService.enableQuietly）。
+         没授权时按钮自动降级为「跳系统无障碍页」，不影响功能。 -->
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
+
+    <!-- 自动更新：拉起系统安装器需要它（8.0+ 还要用户在「安装未知应用」里按应用授权）。
+         注意这不是「静默安装」——普通应用拿不到 INSTALL_PACKAGES，最后一步必须用户点确认。 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application
+        android:name=".JingCaiApp"
+        android:label="@string/app_name"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:usesCleartextTraffic="true"
+        android:theme="@style/Theme.JingCai">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|keyboardHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- 长按图标 → 比分直播 / 竞彩赛程（见 res/xml/shortcuts.xml） -->
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
+
+        <!-- 桌面比分小组件：只读本地快照，不自己联网（见 LiveWidgetProvider 的 KDoc） -->
+        <receiver
+            android:name=".widget.LiveWidgetProvider"
+            android:exported="true"
+            android:label="@string/widget_desc">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="com.example.jingcai.WIDGET_REFRESH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_live_info" />
+        </receiver>
+
+        <!-- 防冻结锚点（见 GoalWatchService 的 KDoc）。dataSync 是「后台拉比分数据」的对应类型 -->
+        <!-- 闹钟唤醒接收器：到点拉一次比分并判进球（见 GoalAlarmReceiver 的 KDoc） -->
+        <receiver
+            android:name=".ui.live.GoalAlarmReceiver"
+            android:exported="false" />
+
+        <!-- 调试注入器：`am broadcast -a com.example.jingcai.DEBUG_GOAL` 模拟进球。
+             仅 debug 包生效（运行时检查 FLAG_DEBUGGABLE），见 DebugGoalReceiver 的 KDoc。 -->
+        <receiver
+            android:name=".ui.live.DebugGoalReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.jingcai.DEBUG_GOAL" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".ui.live.GoalWatchService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!--
+          进球提醒的「进程保活」无障碍服务：不读屏幕内容，只借「由 system_server 长期绑定」这一点
+          让进程不进 cached 档，绕开 ROM 的 cgroup freezer 冻结 ⇒ 息屏后仍能发通知 + 震动。
+          用户的代价：需要在系统设置里手动开启一次（见 GoalKeepAliveService 的 KDoc）。
+        -->
+        <service
+            android:name=".ui.live.GoalKeepAliveService"
+            android:exported="true"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/goal_keepalive" />
+        </service>
+
+        <!-- 自动更新：把下载到私有目录的 apk 以 content:// 交给系统安装器。
+             7.0+ 直接传 file:// 会抛 FileUriExposedException，必须走 FileProvider。 -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+    </application>
+</manifest>

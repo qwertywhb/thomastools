@@ -1,0 +1,32 @@
+# ---- Gradle / Android 构建产物 ----
+build/
+.gradle/
+captures/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# ---- 本地配置（含各机器不同的 SDK 路径，绝不能入库）----
+local.properties
+
+# ---- IDE ----
+.idea/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+Thumbs.db
+
+# ---- 签名文件（一旦泄露即可被用来签恶意包）----
+*.jks
+*.keystore
+
+# ---- QA 抓包与截图：体积大且可再生成，只保留脚本与文档 ----
+qa/shots/
+qa/_jc/
+qa/*.png
+qa/_*.html
+qa/*.aspx

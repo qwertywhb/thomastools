@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  进球 / 取消进球 状态栏通知的**自定义版式**（RemoteViews）。
+
+  ## 第三版（2026-11-02）：按用户反馈「太宽、太淡」重做
+  - **更紧凑**：原来三行（标签 / 队名+比分 / 联赛）压成**两行**
+    —— 联赛挤到第一行标签右侧，省掉的正是最占高度的那一行；
+    上下内边距 10dp→7dp，左右 12dp→10dp，行距 3dp→2dp。
+  - **不再"撑满宽度"**：第二行原来是两个 `weight=1` 的队名把「比分」架在屏幕两端，
+    队名一短就中间空一大片、显宽。现在改成三个 `wrap_content` + 整行居中，
+    **内容自己抱团**，左右留白交给系统；长队名靠 `maxWidth`(146dp) + 单行省略兜住。
+  - **不再"淡"**：正文墨色 #1F2937→#0F172A、辅助灰 #6B7280→#475569、
+    红 #D32F2F→#C62828，字重上「进球」与比分加粗；夜间模式同步调亮。
+  - emoji ⚽/🚫 换成实心圆点 ●：emoji 自带彩色字形，既撑宽行高又不受 `setTextColor` 控制，
+    会把"红/灰"的事件色冲掉。
+
+  ## 为什么不用系统默认 setContentTitle/setContentText
+  系统通知标题固定用 `NotificationTitle` 文本样式（**加粗**、16~17sp），队名稍长就被省略号截断，
+  而且标题/正文的颜色由系统模板写死，**没法把进球方单独染红**。
+
+  ⚠️ RemoteViews 只支持有限控件（LinearLayout / TextView / ImageView 等），且**运行时**只能用
+  白名单方法（setTextViewText / setTextColor / setViewVisibility）。所以字号、字重、内边距、
+  maxLines、maxWidth 全部写在 XML 里，Kotlin 侧只设文字和颜色。
+  背景色**故意不画**：交给系统通知面板自己画（浅色/深色模式自适应），我们只按夜间模式切换文字颜色。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notif_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="7dp"
+    android:paddingBottom="7dp">
+
+    <!-- 第一行：事件标签 + 联赛（联赛没有时该控件 GONE，不会留空） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/notif_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="● 进球" />
+
+        <TextView
+            android:id="@+id/notif_league"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textSize="10.5sp" />
+    </LinearLayout>
+
+    <!-- 第二行：主队 · 比分 · 客队，整体居中抱团（不是两端撑开）。进球方文字由代码染红 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:baselineAligned="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/notif_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="end"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:maxWidth="146dp"
+            android:textSize="13sp" />
+
+        <!-- 比分：拆成「主队数 / 分隔符 / 客队数」三个 TextView，
+             因为 RemoteViews 里 setTextViewText **会丢掉 Span**，一个控件没法做双色。 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="7dp"
+            android:baselineAligned="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/notif_score_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notif_score_sep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:text="-" />
+
+            <TextView
+                android:id="@+id/notif_score_away"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/notif_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:maxWidth="146dp"
+            android:textSize="13sp" />
+    </LinearLayout>
+</LinearLayout>

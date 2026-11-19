@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  进球提醒的「进程保活」无障碍服务配置。
+
+  eventTypes 只留最轻的 typeWindowStateChanged：本服务**不读屏幕内容**
+  （canRetrieveWindowContent=false），只借无障碍服务「由 system_server 长期绑定」这一点
+  让进程不进 cached 档，从而躲开 cgroup freezer 的冻结，让息屏后的轮询与震动/通知仍能发出。
+
+  🔴 `packageNames` 锁死成自家包名：系统在**投递事件前**就按包名过滤，
+  别的 App（微信、银行、输入法）的窗口事件**根本不会进到这个进程**。
+  这不是"代码里不处理"，而是"压根收不到" —— 能把「无障碍=能偷看一切」这个担忧压到最小。
+  注意：保活靠的是「被 system_server 长期 bind」这件事，不是靠收事件，
+  所以限制包名**不影响**保活效果（本服务 onAccessibilityEvent 本来就是空实现）。
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:description="@string/goal_keepalive_desc"
+    android:accessibilityEventTypes="typeWindowStateChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagDefault"
+    android:notificationTimeout="200"
+    android:packageNames="com.example.jingcai"
+    android:canRetrieveWindowContent="false" />

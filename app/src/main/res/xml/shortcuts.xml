@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  长按桌面图标的快捷入口。
+
+  🔴 只放两个「一天要点很多次」的页面：比分直播、竞彩赛程。
+     别再往里塞（系统最多展示 4~5 个，多了会折叠进「更多」，反而更难点）。
+  🔴 intent 用的是 explicit（targetClass），不要写隐式 action —— Android 12+ 对
+     隐式 intent 的 exported 校验会直接让快捷方式失效。
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="live"
+        android:shortcutLongLabel="@string/sc_live_long"
+        android:shortcutShortLabel="@string/sc_live_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.jingcai.MainActivity"
+            android:targetPackage="com.example.jingcai">
+            <extra
+                android:name="route"
+                android:value="live" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="schedule"
+        android:shortcutLongLabel="@string/sc_sched_long"
+        android:shortcutShortLabel="@string/sc_sched_short">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.jingcai.MainActivity"
+            android:targetPackage="com.example.jingcai">
+            <extra
+                android:name="route"
+                android:value="schedule" />
+        </intent>
+    </shortcut>
+</shortcuts>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Thomas助手</string>
+    <string name="goal_keepalive_desc">只用于保证息屏时进球提醒能送达（震动 + 状态栏）。本服务不读取屏幕内容、不模拟点击、不监听其它应用，只接收本应用自身的窗口变化事件，也不联网上传任何数据。</string>
+
+    <!-- 长按快捷方式 -->
+    <string name="sc_live_short">比分直播</string>
+    <string name="sc_live_long">打开比分直播</string>
+    <string name="sc_sched_short">竞彩赛程</string>
+    <string name="sc_sched_long">打开竞彩赛程</string>
+
+    <!-- 桌面小组件 -->
+    <string name="widget_title">比分直播</string>
+    <string name="widget_placeholder">点这里查看今日比分</string>
+    <string name="widget_desc">在桌面显示关注比赛的最新比分</string>
+</resources>

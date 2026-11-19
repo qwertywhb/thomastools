@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  比分小组件。
+
+  updatePeriodMillis 用的是系统最小间隔 30 分钟 —— 这是系统级节流，写更小的值也会被
+  拉到 30 分钟。所以小组件定位是「一眼看最近比分 + 一键进入」，而不是实时刷新；
+  真要看实时，点进去就是 5 秒 tick 的比分直播页。
+-->
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialLayout="@layout/widget_live"
+    android:minHeight="72dp"
+    android:minWidth="180dp"
+    android:previewImage="@mipmap/ic_launcher"
+    android:resizeMode="horizontal|vertical"
+    android:updatePeriodMillis="1800000"
+    android:widgetCategory="home_screen" />

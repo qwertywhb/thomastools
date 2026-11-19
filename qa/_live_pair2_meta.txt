@@ -1,0 +1,11 @@
+page_url=https://cp.titan007.com/buy/JingCai.aspx
+page_status=200
+page_bytes=312138
+page_time=1792139415.824
+change_url=https://cp.titan007.com/info/match/data/change.xml
+change_status=200
+change_bytes=150
+change_time=1792139415.996
+gap_s=0.172
+content_type_page=text/html; charset=utf-8
+content_type_change=text/xml

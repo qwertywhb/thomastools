@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 「已派奖」小胶囊的底：淡红半透明（夜间自动换成亮红半透明，见 values-night） -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <corners android:radius="10dp" />
+    <solid android:color="@color/notif_payout_pill_bg" />
+</shape>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖通知（红字浅底）的配色 —— **日间**。
+
+  用户口径（2026-11-05 二次调整）：「还是把字体变红，背景不要红太鲜艳了」。
+  于是从「红底白字」翻成「极淡暖白底 + 红字」，红只留在文字上。
+
+  ## 为什么颜色要抽成 @color 而不是写死在 layout
+  夜间模式要另配一套（否则浅粉卡片糊在深色通知面板上会亮得刺眼）。
+  唯一能「零代码切两套」的机制就是 `values-night/` 覆盖同名颜色 ——
+  RemoteViews 在接收端按 app 的 Configuration 解析资源，系统切夜间会自动换图。
+  ⇒ **layout 里不许再出现字面色值**，否则夜间那套就漏了。
+-->
+<resources>
+    <!-- 卡片底：上近乎白、下压一点极浅的粉，给红字一个「暖」的衬托又不喧宾夺主 -->
+    <color name="notif_payout_bg_start">#FFFCFB</color>
+    <color name="notif_payout_bg_end">#FFEDEA</color>
+    <!-- 1dp 描边：浅底压在浅色通知面板上容易"飘"，一圈极淡的红能稳住边界 -->
+    <color name="notif_payout_stroke">#1FC62828</color>
+
+    <!-- 主红字：标签、金额、底部动作（品牌红，与 Theme.Primary / 印章同源） -->
+    <color name="notif_payout_ink">#C62828</color>
+    <!-- 次级暖灰：金额后的「N 注中奖」 -->
+    <color name="notif_payout_sub">#A2635E</color>
+    <!-- 明细：本金/回报行用深暖灰（信息量最大，可读性优先），注单摘要更淡一档 -->
+    <color name="notif_payout_detail">#7B4A46</color>
+    <color name="notif_payout_detail2">#9C6762</color>
+    <!-- 「已派奖」胶囊：淡红底 + 红字 -->
+    <color name="notif_payout_pill_bg">#1FC62828</color>
+    <color name="notif_payout_pill_text">#C62828</color>
+    <!-- 分隔线 -->
+    <color name="notif_payout_divider">#26C62828</color>
+</resources>

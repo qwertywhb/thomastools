@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖通知的**状态栏小图标**（中奖）。
+
+  ## 为什么换成奖杯，不用 stat_sys_download_done
+  原来借的是系统「下载完成」图标（`android.R.drawable.stat_sys_download_done`），
+  中奖提示配一个对勾+下载进度，语义完全对不上，看着像「文件下好了」。
+
+  ## 通知小图标的硬约束
+  - 状态栏只按**alpha 通道**给个纯色剪影（跟随系统深浅栏变白/黑），**与 fillColor 无关**；
+  - 实际渲染约 18dp，细节会被抹平 ⇒ 只用**实心大块 + 粗线**，不画文字、不加内嵌小图。
+    奖杯的「杯身 + 两条杯柄 + 底座」在这个尺寸下仍能一眼认出是奖杯。
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- 杯身：上宽下收的圆底碗 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M5,3 L19,3 L19,7.6 C19,11.2 15.9,13.4 12,13.4 C8.1,13.4 5,11.2 5,7.6 Z" />
+
+    <!-- 左右杯柄：只描边不填充。
+         🔴 18dp 渲染实测：1.7 的笔画会被抗锯齿吃掉、与杯身粘成一坨（看起来像"酒杯"而不是"奖杯"），
+         必须 2.0 起步、并往外拉到 x=1.8/22.2，柄与杯身之间才留得出一条缝。 -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M5,4.6 C2.2,4.6 1.8,6.3 2.1,7.9 C2.4,9.6 3.7,10.4 5.4,10.4"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="2" />
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M19,4.6 C21.8,4.6 22.2,6.3 21.9,7.9 C21.6,9.6 20.3,10.4 18.6,10.4"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="2" />
+
+    <!-- 立柱：2.6 宽在 18dp 下只剩 1.9px，加粗到 3.0 才立得住 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M10.5,13.2 L13.5,13.2 L13.5,16.4 L10.5,16.4 Z" />
+
+    <!-- 底座（四角做圆，避免小尺寸下显得像一块砖）。
+         高度 3.2 是下限：再薄一像素就会在 18dp 上被削成一条灰线。 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M7.4,16.4 L16.6,16.4 A1.2,1.2 0 0 1 17.8,17.6 L17.8,18.4 A1.2,1.2 0 0 1 16.6,19.6 L7.4,19.6 A1.2,1.2 0 0 1 6.2,18.4 L6.2,17.6 A1.2,1.2 0 0 1 7.4,16.4 Z" />
+</vector>

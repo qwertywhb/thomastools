@@ -1,0 +1,68 @@
+ACTIVITY MANAGER PROCESS EXIT INFO (dumpsys activity exit-info)
+Last Timestamp of Persistence Into Persistent Storage: 2026-10-16 16:21:51.898
+  package: com.example.jingcai
+    Historical Process Exit for uid=10324
+        ApplicationExitInfo #0:
+          timestamp=2026-10-16 16:24:48.802 pid=22764 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 23019 state=empty trace=null
+        ApplicationExitInfo #1:
+          timestamp=2026-10-16 16:24:31.578 pid=22325 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 22651 state=empty trace=null
+        ApplicationExitInfo #2:
+          timestamp=2026-10-16 16:24:14.321 pid=22045 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 22246 state=empty trace=null
+        ApplicationExitInfo #3:
+          timestamp=2026-10-16 16:23:55.118 pid=21508 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=400 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 22005 state=empty trace=null
+        ApplicationExitInfo #4:
+          timestamp=2026-10-16 16:23:15.949 pid=21032 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 21446 state=empty trace=null
+        ApplicationExitInfo #5:
+          timestamp=2026-10-16 16:22:40.289 pid=20464 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 20954 state=empty trace=null
+        ApplicationExitInfo #6:
+          timestamp=2026-10-16 16:21:01.322 pid=20096 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 20399 state=empty trace=null
+        ApplicationExitInfo #7:
+          timestamp=2026-10-16 16:20:01.077 pid=19740 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 20021 state=empty trace=null
+        ApplicationExitInfo #8:
+          timestamp=2026-10-16 16:19:27.467 pid=19505 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 19679 state=empty trace=null
+        ApplicationExitInfo #9:
+          timestamp=2026-10-16 16:19:10.089 pid=19278 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 19442 state=empty trace=null
+        ApplicationExitInfo #10:
+          timestamp=2026-10-16 16:18:52.981 pid=18988 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 19207 state=empty trace=null
+        ApplicationExitInfo #11:
+          timestamp=2026-10-16 16:18:35.811 pid=18177 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=283MB description=stop com.example.jingcai due to stop by 18920 state=empty trace=null
+        ApplicationExitInfo #12:
+          timestamp=2026-10-16 16:17:54.291 pid=17651 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=100 pss=0.00 rss=0.00 description=stop com.example.jingcai due to stop by 18058 state=empty trace=null
+        ApplicationExitInfo #13:
+          timestamp=2026-10-16 16:17:20.611 pid=16709 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=400 pss=0.00 rss=310MB description=stop com.example.jingcai due to stop by 17596 state=empty trace=null
+        ApplicationExitInfo #14:
+          timestamp=2026-10-16 16:14:52.961 pid=16234 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=16 (PACKAGE UPDATED) subreason=0 (UNKNOWN) status=0
+          importance=100 pss=0.00 rss=299MB description=stop com.example.jingcai due to installPackageLI state=empty trace=null
+        ApplicationExitInfo #15:
+          timestamp=2026-10-16 16:12:50.183 pid=12248 realUid=10324 packageUid=10324 definingUid=10324 user=0
+          process=com.example.jingcai reason=10 (USER REQUESTED) subreason=21 (FORCE STOP) status=0
+          importance=400 pss=0.00 rss=357MB description=stop com.example.jingcai due to single-cleaner state=empty trace=null

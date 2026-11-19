@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖（中奖）状态栏通知的**展开态**版式（RemoteViews，`setCustomBigContentView`）。
+
+  ## 与折叠态的关系
+  前两行（标签 / 金额）与 [notif_payout.xml] 完全一致，保证**下拉展开时画面不跳**；
+  下面多三块：1dp 分隔线、两行明细（本金/回报、注单摘要）、一行「查看投注账本」。
+
+  ## 配色
+  与折叠态同一套 `@color/notif_payout_*`：金额与标签用品牌红，明细退成暖灰阶，
+  这样红字只在"该被看到的地方"出现，三行字全红反而没人读。夜间由 `values-night/` 自动切换。
+
+  ## 为什么明细只给两行
+  展开态上限约 256dp，但不是越高越好 —— 通知栏是"扫一眼"的场景，超过三行用户就不看了。
+  完整明细点进账本看。
+
+  ## 🔴 仍然只能用白名单控件
+  分隔线是 1dp 的 LinearLayout + background（`<View>` 会抛 inflate 异常），
+  颜色/字号全部走资源或写死在 XML，Kotlin 侧只 setTextViewText。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/notif_payout_bg"
+    android:orientation="vertical"
+    android:paddingStart="14dp"
+    android:paddingTop="10dp"
+    android:paddingEnd="14dp"
+    android:paddingBottom="8dp">
+
+    <!-- 第一行：中奖标签 + 「已派奖」胶囊 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="● 恭喜中奖"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/notif_payout_pill"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingStart="7dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="2dp"
+            android:text="已派奖"
+            android:textColor="@color/notif_payout_pill_text"
+            android:textSize="9.5sp" />
+    </LinearLayout>
+
+    <!-- 第二行：金额 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:baselineAligned="true"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="¥"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/notif_payout_amount_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/notif_payout_count_big"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="9dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/notif_payout_sub"
+            android:textSize="11sp" />
+    </LinearLayout>
+
+    <!-- 分隔线（1dp LinearLayout，原因见文件头） -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="9dp"
+        android:background="@color/notif_payout_divider"
+        android:orientation="horizontal" />
+
+    <!-- 明细一：本金 + 回报倍数 -->
+    <TextView
+        android:id="@+id/notif_payout_detail1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/notif_payout_detail"
+        android:textSize="12sp" />
+
+    <!-- 明细二：注单摘要（队名 + 玩法），长了就省略 -->
+    <TextView
+        android:id="@+id/notif_payout_detail2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:ellipsize="end"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:textColor="@color/notif_payout_detail2"
+        android:textSize="12sp" />
+
+    <!-- 底部动作提示：整张卡片都可点（contentIntent），这里只是告诉用户能点 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:text="查看投注账本 ›"
+        android:textColor="@color/notif_payout_ink"
+        android:textSize="11sp"
+        android:textStyle="bold" />
+</LinearLayout>

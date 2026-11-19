@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖通知配色的**夜间**覆盖。
+
+  深色通知面板上不能让一块浅粉卡片亮着，所以底色反过来做「深红棕」，
+  红字换成**亮红 #FF8A80**（品牌红 #C62828 在深底上对比度只剩 2:1，几乎看不清）。
+
+  ⚠️ 这里的每个名字都必须在 `values/colors_notif.xml` 里有同名项，
+     漏一个就会在该处退化成本文件的默认值或直接编译报错（资源找不到）。
+-->
+<resources>
+    <color name="notif_payout_bg_start">#3B1517</color>
+    <color name="notif_payout_bg_end">#2A0E10</color>
+    <color name="notif_payout_stroke">#33FF8A80</color>
+
+    <color name="notif_payout_ink">#FF8A80</color>
+    <color name="notif_payout_sub">#C9A6A3</color>
+    <color name="notif_payout_detail">#E0C2BF</color>
+    <color name="notif_payout_detail2">#B99B98</color>
+    <color name="notif_payout_pill_bg">#33FF8A80</color>
+    <color name="notif_payout_pill_text">#FF8A80</color>
+    <color name="notif_payout_divider">#33FF8A80</color>
+</resources>

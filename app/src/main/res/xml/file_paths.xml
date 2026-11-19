@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider 路径白名单（自动更新用）。只暴露 App 自己的私有目录，绝不共享外部存储根目录。
+  `update/` 与 UpdateManager 里 `getExternalFilesDir(null)/update` 的落盘位置对应。
+-->
+<paths>
+    <external-files-path name="update_ext" path="update/" />
+    <files-path name="update_int" path="update/" />
+    <!-- 注单分享图：临时 PNG 落在 cacheDir/share/，分享出去后系统会自己回收缓存 -->
+    <cache-path name="share" path="share/" />
+</paths>

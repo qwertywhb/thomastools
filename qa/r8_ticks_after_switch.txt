@@ -1,0 +1,8 @@
+--------- beginning of main
+10-16 16:09:50.580 12248 12248 I LiveRefresh: tick #7 t=1792138190580 dx=ok chg=1 full=false
+10-16 16:09:55.780 12248 12248 I LiveRefresh: tick #8 t=1792138195780 dx=ok chg=1 full=false
+10-16 16:10:01.262 12248 12248 I LiveRefresh: tick #9 t=1792138201262 dx=skip chg=1 full=true
+10-16 16:10:06.398 12248 12248 I LiveRefresh: tick #10 t=1792138206398 dx=ok chg=1 full=false
+10-16 16:10:11.563 12248 12248 I LiveRefresh: tick #11 t=1792138211563 dx=ok chg=1 full=false
+10-16 16:10:17.027 12248 12248 I LiveRefresh: tick #12 t=1792138217027 dx=skip chg=1 full=true
+10-16 16:10:22.214 12248 12248 I LiveRefresh: tick #13 t=1792138222214 dx=ok chg=1 full=false

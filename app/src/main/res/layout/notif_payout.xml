@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  派奖（中奖）状态栏通知的**折叠态**自定义版式（RemoteViews）。
+
+  ## 配色口径（2026-11-05 二次调整）
+  **极淡暖白底 + 红字**（原先红底白字太扎眼，用户要求反过来）。
+  底色/字色全部走 `@color/notif_payout_*`，日间与夜间两套由 `values-night/` 自动切换 ——
+  🔴 **本文件里不许再出现字面色值**，漏一个夜间模式就会有一行字是黑的/看不见。
+
+  ## 为什么自己画，不用 setContentTitle/setContentText
+  系统模板的标题是固定 16~17sp 加粗深色字，颜色由通知面板写死，**改不了**；
+  `setColorized(true)+setColor(红)` 在 vivo/OriginOS、MIUI 上直接忽略（实测无效）。
+  自定义 RemoteViews 是唯一跨 ROM 可靠的路子 —— 代价是所有颜色/字号都得写在 XML 里。
+
+  ## 卡片有多高（决定这里能放几行）
+  折叠态的自定义版式被系统**按标准通知行高裁切**（≈64dp），超出的部分直接看不到。
+  所以这一版只放两块：第一行「恭喜中奖 + 已派奖胶囊」，第二行「¥ 金额」，实测总高 ≈62dp。
+  本金与注单摘要 → [notif_payout_big.xml]（展开态）。
+
+  ## 🔴 RemoteViews 的控件白名单
+  只能用 LinearLayout / FrameLayout / RelativeLayout + TextView / ImageView / ProgressBar 之类。
+  **`<View>` 不能出现**（发通知时才抛 `Class not allowed to be inflated`，编译期看不出来）
+  ⇒ 分隔线用 1dp 的 LinearLayout + background；撑空档也要用 `weight=1` 的裸 TextView（`Space` 同样不在白名单）。
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notif_payout_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/notif_payout_bg"
+    android:orientation="vertical"
+    android:paddingStart="14dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="14dp"
+    android:paddingBottom="8dp">
+
+    <!-- 第一行：中奖标签 + 「已派奖」胶囊 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/notif_payout_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="● 恭喜中奖"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/notif_payout_pill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/notif_payout_pill"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:paddingStart="7dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="7dp"
+            android:paddingBottom="2dp"
+            android:text="已派奖"
+            android:textColor="@color/notif_payout_pill_text"
+            android:textSize="9.5sp" />
+    </LinearLayout>
+
+    <!-- 第二行：金额。¥ 与数字分成两个 TextView，才能做出「符号小、数字大」的层次
+         （setTextViewText 会丢掉 Span，一个控件里塞不下两种字号）。 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:baselineAligned="true"
+        android:gravity="bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/notif_payout_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="¥"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/notif_payout_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/notif_payout_ink"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- 「1 注中奖 / 2 注中奖」：让金额旁边马上有量级，不用展开就知道中了几注 -->
+        <TextView
+            android:id="@+id/notif_payout_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/notif_payout_sub"
+            android:textSize="11sp" />
+    </LinearLayout>
+</LinearLayout>
