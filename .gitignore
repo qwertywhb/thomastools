@@ -24,6 +24,9 @@ Thumbs.db
 *.jks
 *.keystore
 
+# ---- 发版产物（scripts/release.py 生成，由 Release 承载，不入库）----
+dist/
+
 # ---- QA 抓包与截图：体积大且可再生成，只保留脚本与文档 ----
 qa/shots/
 qa/_jc/
